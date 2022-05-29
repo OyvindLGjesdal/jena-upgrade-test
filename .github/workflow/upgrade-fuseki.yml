@@ -1,4 +1,4 @@
-name: "run tests for upgrading fuskeki (persistent data)"
+name: "run tests for upgrading fuskeki (persistent data disappearing from named graphs)"
 on: manual
 jobs:
   strategy:
