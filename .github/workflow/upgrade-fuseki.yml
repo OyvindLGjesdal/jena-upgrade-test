@@ -1,8 +1,9 @@
 name: "run tests for upgrading fuskeki (persistent data disappearing from named graphs)"
 on: manual
 jobs:
-  strategy:
-    fail-fast: false
+  build:
+    strategy:
+      fail-fast: false
     matrix: [ubuntu-20.04]
     steps:
     - uses: actions/checkout@v2
