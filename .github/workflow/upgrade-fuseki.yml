@@ -1,5 +1,5 @@
 name: "run tests for upgrading fuskeki (persistent data disappearing from named graphs)"
-on: manual
+on: workflow_dispatch
 jobs:
   build:
     strategy:
