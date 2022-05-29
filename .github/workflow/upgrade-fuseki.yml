@@ -1,0 +1,11 @@
+name: "run tests for upgrading fuskeki (persistent data)"
+on: manual
+jobs:
+  strategy:
+    fail-fast: false
+    matrix: [ubuntu-20.04]
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: "install ansible"
+      run: "sudo apt-get install -y ansible"
