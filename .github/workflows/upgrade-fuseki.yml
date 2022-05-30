@@ -11,3 +11,6 @@ jobs:
 
     - name: "install ansible"
       run: "sudo apt-get install -y ansible"
+
+    - name: "run ansible playbook"
+      run: "ansible-playbook test-tdb2-upgrade.yml"
