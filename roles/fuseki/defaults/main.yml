@@ -1,0 +1,25 @@
+---
+fuseki_components:
+  - "apache-jena"
+  - "apache-jena-fuseki"
+
+fuseki_workspace: "/home/{{ ansible_user }}"
+fuseki_create_user: True
+fuseki_allow_httpd: false
+fuseki_user: "fuseki"
+
+fuseki_version: "3.10.0"
+fuseki_mirror: "https://archive.apache.org/dist"
+
+fuseki_install_dir: "/opt"
+fuseki_base: "/var/fuseki"
+fuseki_home: "/opt/fuseki"
+
+fuseki_modules: []
+jena_home: "/opt/jena"
+fuseki_java_opts: "-Xmx2g\\s-server" # see https://www.freedesktop.org/software/systemd/man/systemd.service.html#id-1.9.26 for escape table for systemd.service. Use double escapes.
+fuseki_compacting: false
+fuseki_service_manage: True
+fuseki_service_state: started
+
+fuseki_configurations: []

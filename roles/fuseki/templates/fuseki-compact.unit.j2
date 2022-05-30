@@ -1,0 +1,25 @@
+[Unit]
+Description=Fuseki Compacting
+Conflicts=fuseki.service fuseki-backup.service
+[Service]
+# Edit environment variables to match your installation
+Environment=FUSEKI_HOME={{ fuseki_home }}
+Environment=FUSEKI_BASE={{ fuseki_base }}
+Environment=JENA_HOME={{ jena_home }}
+ExecStart=/usr/bin/sh -c '/usr/bin/find $FUSEKI_BASE -maxdepth 2 -ipath "*databases/*" -exec $JENA_HOME/bin/tdb2.tdbcompact --loc {} \;'
+ExecStopPost=/usr/bin/sh -c 'find $FUSEKI_BASE -maxdepth 2 -ipath "*databases/*" |while read file; do find $file -type d -path "*Data-*" | sort | head -1  | xargs rm -r   ; done'
+# Run as user "fuseki"
+User={{ fuseki_user }}
+# Java processes exit with status 143 when terminated by SIGTERM, this
+# should be considered a successful shutdown
+SuccessExitStatus=0
+ExecStopPost=/usr/bin/sudo /usr/bin/systemctl start fuseki.service
+### By default, the service logs to journalctl only.
+### If additional logging to a file is required, uncomment the following three lines
+# StandardOutput=syslog
+# StandardError=syslog
+# SyslogIdentifier=fuseki
+### This logs to syslog. If, e.g., rsyslogd is used, you can provide a file
+### /etc/rsyslog.d/fuseki.conf, consisting of the following two lines (uncommented)
+### if $programname == 'fuseki' then /var/log/fuseki/stderrout.log
+### if $programname == 'fuseki' then stop

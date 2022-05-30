@@ -1,0 +1,6 @@
+- name: "fuseki restart"
+  systemd: 
+    name: "fuseki"
+    state: "restarted"
+  become: true
+  when: not fuseki_started.changed

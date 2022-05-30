@@ -1,0 +1,17 @@
+- name: "Copy Fuseki compacting into place"
+  template:
+    src: fuseki-compact.unit.j2
+    dest: /etc/systemd/system/fuseki-compact.service
+
+- name: "Copy Fuseki compacting Timer into place"
+  template:
+    src: "fuseki-compact.timer.j2"
+    dest: "/etc/systemd/system/fuseki-compact.timer"
+
+- name: "Enable fuseki compacting timer"
+  systemd:
+    daemon_reload: "yes"
+    name: "fuseki-compact.timer"
+    state: started
+
+- import_tasks: "sysctl_sudoers.yml"

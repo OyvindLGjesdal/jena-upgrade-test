@@ -1,0 +1,11 @@
+# tasks needed to  to update from CI
+- name: "add authorized_key for reindexing as fuseki user"
+  authorized_key:
+    user: "{{ fuseki_user }}"
+    state: present
+    key: "{{ item }}"
+  become: true
+  loop: "{{ fuseki_public_key }}"
+  
+- name: "add sudoers command to allow reindex (stop and start fuseki.service)"
+  import_tasks: "sysctl_sudoers.yml"

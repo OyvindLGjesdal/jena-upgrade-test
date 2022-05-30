@@ -1,0 +1,155 @@
+---
+- name: fuseki present
+  command: "echo fuseki"
+  register: fuseki_present
+  when: "'apache-jena-fuseki' in fuseki_components"
+    
+- name: Ensure fuseki_user group exists.
+  group:
+    name: "{{ fuseki_user }}"
+    state: present
+  when: fuseki_create_user | bool
+  become: true
+
+- name: Ensure fuseki_user exists.
+  user:
+    name: "{{ fuseki_user }}"
+    group: "{{ fuseki_user }}"
+    system: yes
+    state: present
+  when: fuseki_create_user | bool
+  become: true
+
+- name: Check if Fuseki and Jena have been installed already.
+  stat:
+    path: "{{ fuseki_install_dir }}/{{ item }}-{{ fuseki_version }}"
+  with_items: "{{ fuseki_components }}"
+  register: fuseki_install_status
+
+- name: Download Fuseki and Jena.
+  get_url:
+    url: "{{ fuseki_mirror }}/jena/binaries/{{ item.item }}-{{ fuseki_version }}.tar.gz"
+    dest: "{{ fuseki_workspace }}/{{ item.item }}-{{fuseki_version }}.tar.gz"
+    force: no
+  with_items: "{{ fuseki_install_status.results }}"
+  when: item.stat.isdir is not defined
+  register: fuseki_download_status
+  become: true
+
+- name: Expand Fuseki and Jena.
+  unarchive:
+    src: "{{ fuseki_workspace }}/{{ item.item.item }}-{{fuseki_version }}.tar.gz"
+    dest: "{{ fuseki_install_dir }}"
+    copy: no
+  with_items: "{{ fuseki_download_status.results }}"
+  when: item.changed == true
+  become: true
+
+- name: Create symlink to unnumbered apache jena and fuseki
+  file:
+    src: "{{fuseki_install_dir}}/{{ item }}-{{ fuseki_version }}"
+    dest: "/opt/{{ item | replace('apache-','') | replace('jena-fuseki','fuseki')}}"
+    state: link
+    owner: "{{fuseki_user}}"
+    group: "{{fuseki_user}}"
+  become: true
+  with_items: "{{fuseki_components}}"
+
+- name: Delete Fuseki and Jena downloads.
+  file:
+    path: "{{ fuseki_workspace }}/{{ item }}-{{fuseki_version }}.tar.gz"
+    state: absent
+  with_items: "{{ fuseki_components }}"
+  become: true
+
+- name: "Configure environment ($PATH)."
+  template:
+    src: "env.sh.j2"
+    dest: "/etc/profile.d/fuseki.sh"
+  become: true
+  
+- name: set up and configure fuseki
+  block:  
+  - name: Configure Fuseki defaults.
+    template:
+      src: "fuseki-defaults.j2"
+      dest: "/etc/default/fuseki"
+    notify: "fuseki restart"
+
+  - name: "Ensure that $FUSEKI_BASE, and subdirs configuration and databases exists."
+    file:
+      path: "{{ item }}"
+      owner: "{{ fuseki_user }}"
+      group: "{{ fuseki_user }}"
+      mode: 0770
+      state: directory
+    with_items:
+      - "{{ fuseki_base }}"
+      - "{{ fuseki_base }}/configuration"
+      - "{{ fuseki_base }}/databases"
+
+  - name: "Configure Fuseki"
+    template:
+      src: "fuseki-config.ttl.j2"
+      dest: "{{ fuseki_base }}/configuration/{{ item.name }}.ttl"
+      owner: "{{ fuseki_user }}"
+      group: "{{ fuseki_user }}"
+      mode: 0440
+    with_items: "{{ fuseki_configurations }}"
+    notify: "fuseki restart"
+
+  - name: "Copy fuseki configuration files"
+    copy:
+      src: "{{ item.config }}"
+      dest: "{{ fuseki_base }}/configuration/{{ item.name }}.ttl"
+      owner: "{{ fuseki_user }}"
+      group: "{{ fuseki_group }}"
+      mode: "0440"
+    when: item.config is defined
+    with_items: "{{ fuseki_configurations }}"
+
+
+  - name: "Copy Fuseki systemd unit file into place (template from jena-fuseki)"
+    template:
+      src: fuseki.unit.j2
+      dest: /etc/systemd/system/fuseki.service
+      owner: root
+      group: root
+      mode: 0755
+    notify: "fuseki restart"
+  
+  - name: "Import compacting tasks"
+    import_tasks: "compacting.yml"
+    when: fuseki_compacting | bool
+
+  - name: "Import modules.yml"
+    import_tasks: "modules.yml"
+  
+  - name: "Import reindex.yml"
+    import_tasks: "reindex.yml"
+    when: "fuseki_lucene | default (false) | bool"
+
+  - name: "make sure fuseki server is executable"
+    file:
+      path: "{{ fuseki_home }}/fuseki-server"
+      mode: "+x"
+    become: true
+
+  - name: "Ensure Fuseki is started and enabled on boot if configured"
+    systemd:
+      name: "fuseki"
+      state: "{{ fuseki_service_state }}"
+      enabled: yes
+    when: fuseki_service_manage | bool
+    register: fuseki_started
+ 
+  - name: "allow communication to localhost fuseki (3030)"
+    seport:
+      ports: "3030"
+      setype: "http_port_t"
+      state: "present"
+      proto: "tcp"
+    become: true
+    when: "fuseki_allow_httpd | bool"
+  when: "fuseki_present.stdout is defined and fuseki_present.stdout == 'fuseki'"
+  become: true

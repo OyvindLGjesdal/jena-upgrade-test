@@ -1,0 +1,10 @@
+- name: "Add fuseki start for {{ fuseki_user }} to sudoers file"
+  lineinfile:
+    path: /etc/sudoers
+    line: "{{ item }}"
+    validate: '/usr/sbin/visudo -cf %s'
+  with_items:
+  - "{{ fuseki_user }} ALL=(ALL) NOPASSWD: /usr/bin/systemctl start fuseki.service"
+  - "{{ fuseki_user }} ALL=(ALL) NOPASSWD: /usr/bin/systemctl stop fuseki.service"
+  - "{{ fuseki_user }} ALL=(ALL) NOPASSWD: /usr/bin/systemctl start fuseki-compact.service"
+
