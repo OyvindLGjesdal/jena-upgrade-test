@@ -7,7 +7,7 @@
       name: "fuseki"
     vars:
       fuseki_version: "4.4.0"
-      fuseki_allow_httpd: true
+      fuseki_allow_httpd: false
       fuseki_java_opts: "-Xmx1g\\s-server"
       fuseki_compacting: false
       fuseki_lucene: true
