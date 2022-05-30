@@ -6,6 +6,7 @@
     key: "{{ item }}"
   become: true
   loop: "{{ fuseki_public_key }}"
-  
+  when: "fuseki_public_key is defined"
+
 - name: "add sudoers command to allow reindex (stop and start fuseki.service)"
   import_tasks: "sysctl_sudoers.yml"

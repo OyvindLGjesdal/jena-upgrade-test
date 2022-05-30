@@ -3,7 +3,7 @@
   command: "echo fuseki"
   register: fuseki_present
   when: "'apache-jena-fuseki' in fuseki_components"
-    
+
 - name: Ensure fuseki_user group exists.
   group:
     name: "{{ fuseki_user }}"
@@ -67,9 +67,9 @@
     src: "env.sh.j2"
     dest: "/etc/profile.d/fuseki.sh"
   become: true
-  
+
 - name: set up and configure fuseki
-  block:  
+  block:
   - name: Configure Fuseki defaults.
     template:
       src: "fuseki-defaults.j2"
@@ -117,17 +117,17 @@
       group: root
       mode: 0755
     notify: "fuseki restart"
-  
+
   - name: "Import compacting tasks"
     import_tasks: "compacting.yml"
     when: fuseki_compacting | bool
 
   - name: "Import modules.yml"
     import_tasks: "modules.yml"
-  
+
   - name: "Import reindex.yml"
     import_tasks: "reindex.yml"
-    when: "fuseki_lucene | default (false) | bool"
+    when: "fuseki_lucene | default (false) | bool and fuseki_public_key is defined"
 
   - name: "make sure fuseki server is executable"
     file:
@@ -142,7 +142,7 @@
       enabled: yes
     when: fuseki_service_manage | bool
     register: fuseki_started
- 
+
   - name: "allow communication to localhost fuseki (3030)"
     seport:
       ports: "3030"
