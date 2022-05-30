@@ -1,0 +1,10 @@
+<http://data.toponymi.spraksamlingane.no//id/fb20b3e9-172c-356e-8eea-7e49299de2a9> <http://erlangen-crm.org/current/P87_is_identified_by> <http://data.toponymi.spraksamlingane.no//id/fb20b3e9-172c-356e-8eea-7e49299de2a9#geo-1> .
+<http://data.toponymi.spraksamlingane.no//id/fb20b3e9-172c-356e-8eea-7e49299de2a9> <http://erlangen-crm.org/current/P87_is_identified_by> <http://data.toponymi.spraksamlingane.no//id/SNID-NO-0008600128250> .
+<http://data.toponymi.spraksamlingane.no//id/fb20b3e9-172c-356e-8eea-7e49299de2a9> <http://purl.org/dc/terms/identifier> "0619-88"@no .
+<http://data.toponymi.spraksamlingane.no//id/fb20b3e9-172c-356e-8eea-7e49299de2a9> <http://www.w3.org/2000/01/rdf-schema#label> "Berg nordre"@no .
+<http://data.toponymi.spraksamlingane.no//id/fb20b3e9-172c-356e-8eea-7e49299de2a9> <http://erlangen-crm.org/current/P2_has_type> <http://vokab.toponymi.spraksamlingane.no/id/0753adf3-7dd6-3972-adc7-ddfbe5b8e2f2> .
+<http://data.toponymi.spraksamlingane.no//id/fb20b3e9-172c-356e-8eea-7e49299de2a9> <http://purl.org/dc/terms/date> "1909"^^<http://www.w3.org/2001/XMLSchema#gYear> .
+<http://data.toponymi.spraksamlingane.no//id/fb20b3e9-172c-356e-8eea-7e49299de2a9> <http://erlangen-crm.org/current/P89i_contains> <http://data.toponymi.spraksamlingane.no//id/4eb98427-b9d1-3fad-9891-24f7a725fe3f> .
+<http://data.toponymi.spraksamlingane.no//id/fb20b3e9-172c-356e-8eea-7e49299de2a9> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://erlangen-crm.org/current/E53_Place> .
+<http://data.toponymi.spraksamlingane.no//id/fb20b3e9-172c-356e-8eea-7e49299de2a9> <http://erlangen-crm.org/current/P89_falls_within> <http://data.toponymi.spraksamlingane.no//id/05a877a3-2d5a-362e-a7f1-128df70ed1e7> .
+<http://data.toponymi.spraksamlingane.no//id/fb20b3e9-172c-356e-8eea-7e49299de2a9> <http://erlangen-crm.org/current/P70I_is_documented_in> <https://www.nb.no/items/URN:NBN:no-nb_digibok_2008011512004?page=167> .
