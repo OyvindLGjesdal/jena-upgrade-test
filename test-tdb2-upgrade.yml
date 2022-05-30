@@ -47,6 +47,8 @@
        sudo /usr/bin/systemctl start fuseki.service
     become_user: fuseki
     become: true
+    environment:
+      FUSEKI_HOME: "/opt/jena-fuseki"
 
   - name: "query test endpoint"
     debug:
