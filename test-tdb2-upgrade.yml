@@ -37,6 +37,14 @@
   - name: "publish test data to graph store on write endpoint"
     shell: "curl -v -f -H 'Content-type: application/n-triples'  -H 'Transfer-Encoding: chunked' -X PUT -T test.nt localhost:3030/stedsnavn-data_write/data?graph=http://data.stadnamn.uib.no/stedsnavn/rygh"
 
+  - name: "debug"
+    shell: ls /opt/jena-fuseki -alh
+    register: jena_home_content
+
+  - name: "debug folder content"
+    debug:
+      msg: "{{ jena_home_content }}"
+
   - name: "stop fuseki, index lucene, start fuseki"
     shell:
       chdir: "/opt/jena-fuseki"
