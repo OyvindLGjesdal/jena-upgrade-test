@@ -8,11 +8,9 @@ jobs:
       fail-fast: false
     steps:
     - uses: actions/checkout@v2
-    - name: "check which user I am"
-      run: "whoami"
 
-      #   - name: "install ansible"
-      # run: "sudo apt-get install -y ansible"
+    - name: "install ansible"
+      run: "sudo apt-get install -y ansible"
 
-      #  - name: "run ansible playbook"
-      # run: "ansible-playbook test-tdb2-upgrade.yml"
+    - name: "run ansible playbook"
+      run: "ansible-playbook test-tdb2-upgrade.yml"
