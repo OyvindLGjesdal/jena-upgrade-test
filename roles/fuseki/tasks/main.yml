@@ -127,7 +127,7 @@
 
   - name: "Import reindex.yml"
     import_tasks: "reindex.yml"
-    when: "fuseki_lucene | default (false) | bool and fuseki_public_key is defined"
+    when: "fuseki_lucene | default (false) | bool"
 
   - name: "make sure fuseki server is executable"
     file:
