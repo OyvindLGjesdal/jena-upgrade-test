@@ -29,9 +29,15 @@
          [ text:field "label" ;
            text:predicate rdfs:label ]
          )
-  - name: "put test data into endpoint"
-    debug:
-      msg: "test"
+  - name: "wait for endpoint to be started"
+    wait_for:
+      port: 3030
+      state: started
+
+  - name: "publish test data to graph store on write endpoint"
+    shell: "curl -v -f -H 'Content-type: application/n-triples'  -H 'Transfer-Encoding: chunked' -X PUT -T test.nt localhost:3030/stedsnavn-data_write/data?graph=http://data.stadnamn.uib.no/stedsnavn/rygh"
+
+  - name: "stop fuseki, index lucene, start fuseki"
 
   - name: "query test endpoint"
     debug:
