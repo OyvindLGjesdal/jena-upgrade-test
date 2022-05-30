@@ -38,7 +38,7 @@
     shell: "curl -v -f -H 'Content-type: application/n-triples'  -H 'Transfer-Encoding: chunked' -X PUT -T test.nt localhost:3030/stedsnavn-data_write/data?graph=http://data.stadnamn.uib.no/stedsnavn/rygh"
 
   - name: "debug"
-    shell: ls /opt/jena-fuseki -alh
+    shell: ls /opt/ -alh && ls /var/ -alh
     register: jena_home_content
 
   - name: "debug folder content"
@@ -52,7 +52,7 @@
        sudo /usr/bin/systemctl stop fuseki.service &&
        cd /var/fuseki/databases/stedsnavn-data &&
        rm -rf Lucene &&
-       java -cp /opt/jena-fuseki/fuseki-server.jar jena.textindexer --desc=/var/fuseki-configuration/configuration/stedsnavn-data.ttl &&
+       java -cp /opt/apache-jena-fuseki/fuseki-server.jar jena.textindexer --desc=/var/fuseki/configuration/stedsnavn-data.ttl &&
        sudo /usr/bin/systemctl start fuseki.service
     become_user: fuseki
     become: true
