@@ -1,0 +1,5 @@
+- src: "https://git.app.uib.no/uib-ub/roller-ansible/fuseki.git"
+  version: master
+  scm: git
+
+
