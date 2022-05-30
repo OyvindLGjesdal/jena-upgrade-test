@@ -39,6 +39,7 @@
 
   - name: "stop fuseki, index lucene, start fuseki"
     shell:
+      chdir: "/opt/jena-fuseki"
       cmd: |
        sudo /usr/bin/systemctl stop fuseki.service &&
        cd /var/fuseki/databases/stedsnavn-data &&
