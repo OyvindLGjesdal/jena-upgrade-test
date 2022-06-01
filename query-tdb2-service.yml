@@ -10,8 +10,8 @@ SELECT ?S ?P ?O { WHERE { GRAPH <http://data.stadnamn.uib.no/stedsnavn/rygh> { ?
     state: "stop"
   become: true
 
-- name: " endpoint"
-    shell: "/opt/jena/tdb2.tdbquery --file example-query.sparql --loc /var/fuseki/databases/stedsnavn-data"
+- name: " tdb2.tdbquery on /var/fuseki/databases/stedsnavn-data"
+  shell: "/opt/jena/tdb2.tdbquery --file example-query.sparql --loc /var/fuseki/databases/stedsnavn-data"
   become: true
   become_user: "fuseki"
 
