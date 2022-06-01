@@ -52,7 +52,7 @@
        sudo /usr/bin/systemctl stop fuseki.service &&
        cd /var/fuseki/databases/stedsnavn-data &&
        rm -rf Lucene &&
-       java -cp /opt/apache-jena-fuseki/fuseki-server.jar jena.textindexer --desc=/var/fuseki/configuration/stedsnavn-data.ttl &&
+       java -cp /opt/fuseki/fuseki-server.jar jena.textindexer --desc=/var/fuseki/configuration/stedsnavn-data.ttl &&
        sudo /usr/bin/systemctl start fuseki.service
     become_user: fuseki
     become: true
