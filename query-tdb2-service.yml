@@ -14,6 +14,11 @@ SELECT ?S ?P ?O { WHERE { GRAPH <http://data.stadnamn.uib.no/stedsnavn/rygh> { ?
   shell: "/opt/jena/bin/tdb2.tdbquery --file example-query.sparql --loc /var/fuseki/databases/stedsnavn-data"
   become: true
   become_user: "fuseki"
+  register: "fuseki_tdbquery_output"
+
+- name: "view output of tdb2.tdbquery"
+  debug:
+    msg: "{{ fuseki_tdbquery_output }}"
 
 - name: "query tdb2 folder using tdb2.query"
   debug:
