@@ -59,6 +59,9 @@
     environment:
       FUSEKI_HOME: "/opt/jena-fuseki"
 
+  - name: "import tasks"
+    import_tasks: "query-tdb2-service.yml"
+
   - name: "query test endpoint"
     debug:
       msg: "test"

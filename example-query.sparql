@@ -1,0 +1,10 @@
+PREFIX  rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX  text: <http://jena.apache.org/text#>
+
+SELECT  ?S ?P ?O
+WHERE
+  { GRAPH <http://data.stadnamn.uib.no/stedsnavn/rygh>
+      { ?S    ?P                    ?O ;
+              text:query            ( rdfs:label "Berg" )
+      }
+  }

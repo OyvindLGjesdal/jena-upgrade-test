@@ -1,0 +1,24 @@
+- name: "set fact for query"
+  set_fact:
+    tdb2_sparql_query: "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX text: <http://jena.apache.org/text#>
+SELECT ?S ?P ?O { WHERE { GRAPH <http://data.stadnamn.uib.no/stedsnavn/rygh> { ?S ?P ?O ;  text:query (rdfs:label 'Berg') }"
+
+- name: "stop fuseki"
+  systemd:
+    name: "fuseki"
+    state: "stop"
+  become: true
+
+- name: " endpoint"
+    shell: "/opt/jena/tdb2.tdbquery --file example-query.sparql --loc /var/fuseki/databases/stedsnavn-data"
+  become: true
+  become_user: "fuseki"
+
+- name: "query tdb2 folder using tdb2.query"
+  debug:
+    msg: "test"
+- name: "view database directory"
+  debug:
+    msg: "test"
+
