@@ -7,7 +7,7 @@ SELECT ?S ?P ?O { WHERE { GRAPH <http://data.stadnamn.uib.no/stedsnavn/rygh> { ?
 - name: "stop fuseki"
   systemd:
     name: "fuseki"
-    state: "stop"
+    state: "stopped"
   become: true
 
 - name: " tdb2.tdbquery on /var/fuseki/databases/stedsnavn-data"
