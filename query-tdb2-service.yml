@@ -1,8 +1,6 @@
 - name: "set fact for query"
   set_fact:
-    tdb2_sparql_query: "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX text: <http://jena.apache.org/text#>
-SELECT ?S ?P ?O { WHERE { GRAPH <http://data.stadnamn.uib.no/stedsnavn/rygh> { ?S ?P ?O ;  text:query (rdfs:label 'Berg') }"
+    tdb2_assembler: "/var/fuseki/configuration/stedsnavn-data.ttl"
 
 - name: "stop fuseki"
   systemd:
@@ -10,11 +8,33 @@ SELECT ?S ?P ?O { WHERE { GRAPH <http://data.stadnamn.uib.no/stedsnavn/rygh> { ?
     state: "stopped"
   become: true
 
-- name: " tdb2.tdbquery on /var/fuseki/databases/stedsnavn-data"
+- name: "tdb2.tdbquery on /var/fuseki/databases/stedsnavn-data"
   shell: "/opt/jena/bin/tdb2.tdbquery --file example-query.sparql --desc=/var/fuseki/configuration/stedsnavn-data.ttl"
   become: true
   become_user: "fuseki"
   register: "fuseki_tdbquery_output"
+
+- name: "remote sparql"
+  shell: "/opt/jena/bin/rsparql --help"
+  register: rsparql_content
+
+- name: "debug rsparql"
+  debug:
+    msg: "{{ rsparql_content }}"
+
+- name: "start fuseki"
+  systemd:
+    name: "fuseki"
+    state: "started"
+  become: true
+
+- name: "tdb2 assembler"
+  shell: "cat {{ tdb2_assembler }}"
+  register: assembler_content
+
+- name: "view output of assembler file"
+  debug:
+    msg: "{{ assembler_content }}"
 
 - name: "view output of tdb2.tdbquery"
   debug:
