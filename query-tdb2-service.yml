@@ -2,6 +2,10 @@
   set_fact:
     tdb2_assembler: "/var/fuseki/configuration/stedsnavn-data.ttl"
 
+- name: "remote sparql"
+  shell: "/opt/jena/bin/rsparql --file example-query.sparql --service=localhost:3030/stedsnavn-data/query"
+  register: rsparql_content
+
 - name: "stop fuseki"
   systemd:
     name: "fuseki"
@@ -13,10 +17,6 @@
   become: true
   become_user: "fuseki"
   register: "fuseki_tdbquery_output"
-
-- name: "remote sparql"
-  shell: "/opt/jena/bin/rsparql --help"
-  register: rsparql_content
 
 - name: "debug rsparql"
   debug:
@@ -31,6 +31,8 @@
 - name: "tdb2 assembler"
   shell: "cat {{ tdb2_assembler }}"
   register: assembler_content
+  become_user: "fuseki"
+  become: true
 
 - name: "view output of assembler file"
   debug:
