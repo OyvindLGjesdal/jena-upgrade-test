@@ -3,7 +3,7 @@
     tdb2_assembler: "/var/fuseki/configuration/stedsnavn-data.ttl"
 
 - name: "remote sparql"
-  shell: "/opt/jena/bin/rsparql --file example-query.sparql --service=localhost:3030/stedsnavn-data/query"
+  shell: "/opt/jena/bin/rsparql --file example-query.sparql --service=http://localhost:3030/stedsnavn-data/query"
   register: rsparql_content
 
 - name: "stop fuseki"
