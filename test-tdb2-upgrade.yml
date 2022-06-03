@@ -6,6 +6,7 @@
   - import_role:
       name: "fuseki"
     vars:
+      fuseki_workspace: /tmp/
       fuseki_version: "4.4.0"
       fuseki_allow_httpd: false
       fuseki_java_opts: "-Xmx1g\\s-server"
@@ -80,6 +81,7 @@
   - import_role:
       name: "fuseki"
     vars:
+      fuseki_workspace: /tmp/
       fuseki_version: "4.5.0"
       fuseki_allow_httpd: false
       fuseki_java_opts: "-Xmx1g\\s-server"
