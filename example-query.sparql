@@ -5,6 +5,6 @@ SELECT  ?S ?P ?O
 WHERE
   { GRAPH <http://data.stadnamn.uib.no/stedsnavn/rygh>
       { ?S    ?P                    ?O .
-      #        text:query            ( "Berg" )
+              text:query            ( "Berg" )
       }
   }

@@ -11,7 +11,7 @@ SELECT ?S ?P ?O { WHERE { GRAPH <http://data.stadnamn.uib.no/stedsnavn/rygh> { ?
   become: true
 
 - name: " tdb2.tdbquery on /var/fuseki/databases/stedsnavn-data"
-  shell: "/opt/jena/bin/tdb2.tdbquery --file example-query.sparql --loc /var/fuseki/databases/stedsnavn-data"
+  shell: "/opt/jena/bin/tdb2.tdbquery --file example-query.sparql --desc= /var/fuseki/configuration/stedsnavn-data.ttl"
   become: true
   become_user: "fuseki"
   register: "fuseki_tdbquery_output"
