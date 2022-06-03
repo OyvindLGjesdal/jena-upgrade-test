@@ -61,6 +61,17 @@
 
   - name: "import tasks"
     import_tasks: "query-tdb2-service.yml"
+  
+  - name: "start fuseki"
+    systemd:
+      name: "fuseki"
+      state: "started"
+    become: true
+
+  - name: "wait for endpoint to be started"
+    wait_for:
+      port: 3030
+      state: started
 
 - name: "install fuseki version 4.5.0"
   hosts: "localhost"
