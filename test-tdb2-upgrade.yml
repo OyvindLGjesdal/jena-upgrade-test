@@ -1,7 +1,7 @@
 
 - name: "install fuseki version 3.14"
   hosts: "localhost"
-  remote_user: runner
+  remote_user: root
   tasks:
   - import_role:
       name: "fuseki"
@@ -75,7 +75,7 @@
 
 - name: "install fuseki version 4.5.0"
   hosts: "localhost"
-  remote_user: runner
+  remote_user: root
   tasks:
   - import_role:
       name: "fuseki"
