@@ -4,7 +4,7 @@ PREFIX  text: <http://jena.apache.org/text#>
 SELECT  ?S ?P ?O
 WHERE
   { GRAPH <http://data.stadnamn.uib.no/stedsnavn/rygh>
-      { ?S    ?P                    ?O .
+      { ?S    ?P                    ?O ;
               text:query            ( "Berg" )
       }
   }
