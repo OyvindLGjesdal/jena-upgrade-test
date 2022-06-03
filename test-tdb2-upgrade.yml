@@ -62,27 +62,36 @@
   - name: "import tasks"
     import_tasks: "query-tdb2-service.yml"
 
-  - name: "query test endpoint"
-    debug:
-      msg: "test"
+- name: "install fuseki version 4.5.0"
+  hosts: "localhost"
+  remote_user: runner
+  tasks:
+  - import_role:
+      name: "fuseki"
+    vars:
+      fuseki_version: "4.5.0"
+      fuseki_allow_httpd: false
+      fuseki_java_opts: "-Xmx1g\\s-server"
+      fuseki_compacting: false
+      fuseki_lucene: true
+      fuseki_configurations:
+      - name: "stedsnavn-data"
+        union_default_graph: true
+        compacting: false
+        read_write: true
+        dataset_type: "tdb2"
+        spatial: false
+        lucene: true
+        entity_map: |
+         text:defaultField     "label" ;
+         text:entityField      "uri" ;
+         text:uidField         "uid" ;
+         text:langField        "lang" ;
+         text:graphField       "graph" ;
+         text:map (
+         [ text:field "label" ;
+           text:predicate rdfs:label ]
+         )
 
-  - name: "view database directory"
-    debug:
-      msg: "test"
-
-  - name: "upgrade endpoint"
-    debug:
-      msg: "test"
-
-  - name: "run query from fuseki"
-    debug:
-      msg: "test"
-
-  - name: "stop fuseki service"
-    debug:
-      msg: "test"
-
-  - name: "run query from tdb2.query on directory"
-    debug:
-      msg: "test"
-
+  - name: "import tasks"
+    import_tasks: "query-tdb2-service.yml"
