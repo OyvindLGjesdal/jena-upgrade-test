@@ -4,7 +4,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-20.04
-    container: centos:centos7
+    container: rockylinux:8
     strategy:
       fail-fast: false
     steps:
