@@ -4,7 +4,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-20.04
-    container: oyvindlg:rocky8-systemd
+    container: oyvindlg/gitlab-ci-library:rocky8-systemd
     strategy:
       fail-fast: false
     steps:
