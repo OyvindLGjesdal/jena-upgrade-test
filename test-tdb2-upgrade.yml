@@ -10,7 +10,7 @@
       fuseki_version: "4.4.0"
       fuseki_allow_httpd: false
       fuseki_java_opts: "-Xmx1g\\s-server"
-      fuseki_compacting: false
+      fuseki_compacting: true
       fuseki_lucene: true
       fuseki_configurations:
       - name: "stedsnavn-data"
@@ -90,7 +90,7 @@
       fuseki_configurations:
       - name: "stedsnavn-data"
         union_default_graph: true
-        compacting: false
+        compacting: true
         read_write: true
         dataset_type: "tdb2"
         spatial: false
