@@ -4,14 +4,13 @@ on:
 jobs:
   build:
     runs-on: ubuntu-22.04
-    container: oyvindlg/gitlab-ci-library:rocky8-systemd
     strategy:
       fail-fast: false
     steps:
     - uses: actions/checkout@v2
 
     - name: "install ansible"
-      run: "whoami && dnf install -y epel-release python39-pip && pip3 install ansible==2.10.7"
+      run: "whoami && apt-get install -y python3-pip && pip3 install ansible==2.10.7"
 
     - name: "run ansible playbook"
       run: "ansible-playbook test-tdb2-upgrade.yml"
